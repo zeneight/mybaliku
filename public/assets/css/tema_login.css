@@ -1,0 +1,70 @@
+.form-signin {
+	max-width: 300px;
+	padding: 20px;
+	margin: 0 auto 20px;
+	background-color: rgba(255, 255, 255, 0.79);
+	/*border: 1px solid #e5e5e5;*/
+	/*-webkit-border-radius: 5px;
+	   -moz-border-radius: 5px;
+			border-radius: 5px;
+
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	   -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+			box-shadow: 0 1px 2px rgba(0,0,0,.05);*/
+}
+
+h2.page-header {
+	margin: 0;
+}
+
+.fa {
+	width: 14px;
+}
+
+.content-login {
+	z-index: 100;
+	position: absolute;
+	top:10%;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 300px;
+	margin: 0 auto;
+}
+
+.input-group {
+	margin-bottom: 15px;
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+	margin-bottom: 10px;
+}
+.form-signin input[type="text"],
+.form-signin input[type="password"] {
+	font-size: 16px;
+	height: auto;
+	/*margin-bottom: 15px;*/
+	padding: 7px 9px;
+}
+
+body {
+	/*padding-top: 20px;
+	padding-bottom: 40px;*/
+	background-color: #194414;
+	/*background-image: url(../images/pattern.png);*/
+	background-attachment: fixed;
+	background-size: auto, cover;
+}
+
+.container.logo {
+	margin-bottom: 15px;
+}
+
+img.captcha {
+	margin: 0 auto;
+	padding-bottom: 18px;
+}
+
+#captcha-form {
+	width: 100%;
+}
