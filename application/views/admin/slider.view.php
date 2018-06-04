@@ -20,7 +20,8 @@ start_modal("modal_form", "return saveData()");
 	form_combobox("Kategori Produk", "kategori", $list, 4);*/
 
 	form_mediapicker("Gambar Slide", "gambar", 10, 0, "modal-form");
-	/*form_textarea("Deskripsi", "deskripsi");*/
+	form_textarea("Deskripsi", "deskripsi");
+	form_radio("Status", "status");
 end_modal();
 ?>
 </div>
@@ -43,6 +44,7 @@ end_modal();
 	// menampilkan form modal tambah data
 	function addForm() {
 		save_method = "add";
+		CKEDITOR.instances['deskripsi'].setData('');
 		$('#modal_form').modal('show');
 		$('#modal_form form')[0].reset();
 		$('.modal-title').text('Tambah slider');
@@ -67,6 +69,16 @@ end_modal();
 				$('#id').val(data.id_slider);
 				$('#nama_slider').val(data.nama_slider);
 				$('#img-gambar').html('<img src="<?php echo BASE_PATH; ?>assets/images/slider/'+data.gambar+'" width="100%" height="auto">');
+
+				if (data.status=="Show") {
+					$('#status1').attr('checked', 'checked');
+				} else if (data.status=="Hide") {
+					$('#status2').attr('checked', 'checked');
+				}
+
+				// decode htmlentities string
+				var deskripsi = he.decode(data.deskripsi);
+				CKEDITOR.instances['deskripsi'].setData(deskripsi);
 			},
 			error: function() {
 				swal("Aw, waduh!", "Data tidak dapat ditampilkan!", "error");
@@ -78,6 +90,11 @@ end_modal();
 	function saveData() {
 		if (save_method == "add") url = "<?= BASE_URL; ?>admin/slider/insert";
 		else url = "<?= BASE_URL; ?>admin/slider/update";
+
+		// force update CKEDITOR
+		for (instance in CKEDITOR.instances) {
+			CKEDITOR.instances[instance].updateElement();
+		}
 
 		var formData = new FormData($('#modal_form form')[0]);
 
@@ -93,6 +110,7 @@ end_modal();
 			success: function(response) {
 				$('#modal_form').modal('hide');
 				$('#modal_form form')[0].reset();
+				CKEDITOR.instances['deskripsi'].setData('');
 				table.ajax.reload();
 				swal("Yeah!", "Data sudah disimpan!", "success");
 			},

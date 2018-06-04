@@ -15,8 +15,8 @@ start_modal("modal_form", "return saveData()");
 
 	$list = array();
 	foreach ($data as $d) {
-		$key = $d["id_kategori"];
-		$list[$key] = $d["nama_kategori"];
+		$key = $d["id_katberita"];
+		$list[$key] = $d["nama_katberita"];
 	}
 	form_combobox("Kategori Berita", "kategori", $list, 4);
 
@@ -49,6 +49,7 @@ end_modal();
 		$('#modal_form').modal('show');
 		$('#modal_form form')[0].reset();
 		$('.modal-title').text('Tambah Berita');
+		$("#img-gambar img").remove();
 	}
 
 	// menampilkan form modal edit data

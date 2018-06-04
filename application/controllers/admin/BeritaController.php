@@ -26,7 +26,7 @@ class BeritaController extends AdminMainController
 		$query 	= $this->berita->selectJoin(
 										array("katberita"), 
 										"LEFT JOIN", 
-										array('berita.id_kategori' => 'katberita.id_kategori'),
+										array('berita.id_kategori' => 'katberita.id_katberita'),
 										"",
 										"berita.id_berita", 
 										"DESC"
@@ -40,9 +40,9 @@ class BeritaController extends AdminMainController
 			$no ++;
 			$row 	= array();
 			$row[] 	= $no;
-			$row[] 	= "<img src='".BASE_PATH."assets/images/berita/thumbs/$li[gambar]'>";
+			$row[] 	= "<img height='80px' width='80px' src='".BASE_PATH."assets/images/berita/thumbs/$li[gambar]'>";
 			$row[]	= $li["nama_berita"];
-			$row[]	= $li["nama_kategori"];
+			$row[]	= $li["nama_katberita"];
 			$row[]	= $li["hits"];
 			$row[]	= create_action($li["id_berita"]);
 			$data[] = $row;
@@ -60,11 +60,12 @@ class BeritaController extends AdminMainController
 
 	public function insert() {
 		$data 	= array();
-		if ($_FILES['gambar']) {
+		if ($_FILES['gambar']['size'] != 0 && $_FILES['gambar']['error'] == 0) {
 			$data["gambar"] = $this->imageUploadHandler(
 									$_FILES['gambar'], 
 									$_FILES['gambar']['name'], 
-									$_FILES['gambar']['tmp_name']
+									$_FILES['gambar']['tmp_name'],
+									"berita"
 								);
 		}
 
@@ -79,13 +80,16 @@ class BeritaController extends AdminMainController
 	}
 
 	public function update() {
+		$id 	= $_POST["id"];
 
 		$data 	= array();
-		if ($_FILES['gambar']) {
+		if ($_FILES['gambar']['size'] != 0 && $_FILES['gambar']['error'] == 0) {
+			$this->deleteImage("berita", array('id_berita' => $id), "berita");
 			$data["gambar"] = $this->imageUploadHandler(
 									$_FILES['gambar'], 
 									$_FILES['gambar']['name'], 
-									$_FILES['gambar']['tmp_name']
+									$_FILES['gambar']['tmp_name'],
+									"berita"
 								);
 		}
 
@@ -95,12 +99,12 @@ class BeritaController extends AdminMainController
 		$data["hits"] 			= $_POST["hits"];
 		$data["deskripsi"] 		= htmlentities(($_POST["deskripsi"]));
 
-		$id 	= $_POST["id"];
 		$simpan	= $this->berita->update($data, array('id_berita' => $id));
 	}
 
 	public function delete($id) {
 		$response = array('status'=>false);
+		$this->deleteImage("berita", array('id_berita' => $id), "berita");
 		
 		$hapus = $this->berita->delete(array('id_berita' => $id));
 		if ($hapus && $id) $response['status'] = true;

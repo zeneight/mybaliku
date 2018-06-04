@@ -4,7 +4,7 @@
  * Created with love and in hurry condition
  * 
  * This framework created and implemented for efficiency work, it's nothing serious
- * @author Degung Priambodo <agung@rumahmedia.com>
+ * @author Degung Priambodo <blog.zen8.tk>
  * @version 1.0
  * 
  */
@@ -68,6 +68,14 @@ function callHook() {
 
 		if (method_exists($controllerName, $action)) {
 			call_user_func_array(array($object, $action), $parameter);
-		} else die("Aksi tidak ditemukan!");
-	} else die("Controller tidak ditemukan!");
+		} else {
+			header('location: '.BASE_URL."home");
+			exit();
+			// die("Aksi tidak ditemukan!");
+		}
+	} else {
+		header('location: '.BASE_URL."home");
+		exit();
+		// die("Controller tidak ditemukan!");
+	}
 }

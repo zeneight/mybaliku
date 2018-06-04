@@ -20,7 +20,7 @@ class SliderController extends AdminMainController
 		require_once ROOT."/application/functions/function_action.php";
 		// require_once ROOT."/application/functions/function_rupiah.php";
 
-		$query 	= $this->slider->selectAll();
+		$query 	= $this->slider->selectAll("id_slider", "DESC");
 		$list 	= $this->slider->getResult($query);
 		$data 	= array();
 
@@ -48,18 +48,19 @@ class SliderController extends AdminMainController
 	public function insert() {
 		$response 	= array('status'=>false);
 		$data 		= array();
-		if ($_FILES['gambar']) {
+		if ($_FILES['gambar']['size'] != 0 && $_FILES['gambar']['error'] == 0) {
 			$response_handler = $this->imageUploadHandler(
 									$_FILES['gambar'], 
 									$_FILES['gambar']['name'], 
 									$_FILES['gambar']['tmp_name'],
-									"public/assets/images/slider/"
+									"slider"
 								);
 			$data["gambar"] = $response_handler;
 		}
 
 		$data["nama_slider"] 	= $_POST["nama_slider"];
-		// $data["status"] 		= $_POST["status"];
+		$data["deskripsi"] 		= htmlentities($_POST["deskripsi"]);
+		$data["status"] 		= $_POST["status"];
 
 		$simpan	= $this->slider->insert($data);
 		
@@ -72,20 +73,21 @@ class SliderController extends AdminMainController
 		$data 		= array();
 		$id 		= $_POST["id"];
 
-		if ($_FILES['gambar']) {
-			$this->deleteImage("slider", array('id_slider' => $id), "public/assets/images/slider");
+		if ($_FILES['gambar']['size'] != 0 && $_FILES['gambar']['error'] == 0) {
+			$this->deleteImage("slider", array('id_slider' => $id), "slider");
 
 			$response_handler = $this->imageUploadHandler(
 									$_FILES['gambar'], 
 									$_FILES['gambar']['name'], 
 									$_FILES['gambar']['tmp_name'],
-									"public/assets/images/slider/"
+									"slider"
 								);
 			$data["gambar"] = $response_handler;
 		}
 
 		$data["nama_slider"] 	= $_POST["nama_slider"];
-		// $data["status"] 		= $_POST["status"];
+		$data["deskripsi"] 		= htmlentities($_POST["deskripsi"]);
+		$data["status"] 		= $_POST["status"];
 
 		$simpan	= $this->slider->update($data, array('id_slider' => $id));
 
@@ -96,9 +98,7 @@ class SliderController extends AdminMainController
 	public function delete($id) {
 		$response = array('status'=>false);
 
-		$this->deleteImage("slider", array('id_slider' => $id), "public/assets/images/slider");
-		exit();
-		
+		$this->deleteImage("slider", array('id_slider' => $id), "slider");
 		$hapus = $this->slider->delete(array('id_slider' => $id));
 		if ($hapus && $id) $response['status'] = true;
 

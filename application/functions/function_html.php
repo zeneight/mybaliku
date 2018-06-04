@@ -171,12 +171,13 @@ function form_input($label, $name, $type="text", $width="5", $class="", $attr=""
 }
 
 // textarea
-function form_textarea($label, $name, $class="", $attr="") {
+function form_textarea($label, $name, $class="", $attr="", $content="") {
 	echo '
 	<div class="form-group">
 		<label for="'.$name.'" class="col-sm-2 control-label">'.$label.'</label>
 		<div class="col-sm-10">
 			<textarea class="form-control '.$class.'" rows="8" name="'.$name.'" id="'.$name.'" '.$attr.'>
+			'.$content.'
 			</textarea>
 		</div>
 	</div>
@@ -197,6 +198,40 @@ function form_combobox($label, $name, $list, $width='5', $class="", $attr="") {
 
 	echo '
 			</select>
+		</div>
+	</div>
+	';
+}
+
+function form_radio($label, $nama, $value="") {
+
+	if ($value=="Show") {
+		$status1 = "checked";
+		$status2 = "none";
+	} elseif ($value=="Hide") {
+		$status1 = "none";
+		$status2 = "checked";
+	} else {
+		$status1 = "none";
+		$status2 = "none";
+	}
+
+	echo '
+	<div class="form-group">
+		<label class="col-lg-2 control-label">'.$label.'</label>
+		<div class="col-lg-10">
+			<div class="radio">
+				<label>
+					<input type="radio" name="'.$nama.'" id="status1" value="Show" checked="'.$status1.'">
+					Show
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" name="'.$nama.'" id="status2" value="Hide" checked="'.$status2.'">
+					Hide
+				</label>
+			</div>
 		</div>
 	</div>
 	';

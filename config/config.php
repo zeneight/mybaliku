@@ -3,7 +3,7 @@
 define('BASE', "localhost/kakyanno_v01");
 
 /* controller default jika tidak ada controller yang dipanggil pada url browser */
-define('DEFAULT_CONTROLLER', "admin");
+define('DEFAULT_CONTROLLER', "home");
 
 /* konfigurasi DB */
 define('DB_NAME', "framework");

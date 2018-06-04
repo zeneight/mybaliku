@@ -12,7 +12,8 @@ class ProdukController extends MainController
 	}
 
 	public function index() {
-		$data = $this->produk->showAll();
+		$query 	= $this->produk->selectAll();
+		$data 	= $this->produk->getResult($query);
 		$this->template("produk/index", $data);
 	}
 

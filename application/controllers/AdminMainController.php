@@ -9,6 +9,20 @@ class AdminMainController extends Controller
 		// cek session
 		if (empty($_SESSION["username"]) AND empty($_SESSION["password"])) {
 			$this->redirect("login");
+		} else {
+			$this->model("admin");
+			$us = $_SESSION["username"];
+			$ps = $_SESSION["password"];
+		
+			$qc 	= $this->admin->selectWhere(array('username' => $us, 'password' => $ps));
+			$dc 	= $this->admin->getResult($qc);
+			$jml 	= $this->admin->getRows($qc);
+
+			if ($jml==0) {
+				session_destroy();
+				$this->redirect("login");
+				exit();
+			}
 		}
 
 		// ambil fungsi html
@@ -31,13 +45,13 @@ class AdminMainController extends Controller
 		$view->bind('data', $data);
 	}
 
-	public function imageUploadHandler($gambar, $gambar_name, $gambar_tmp, $path_folder="public/assets/images/produk") {
+	public function imageUploadHandler($gambar, $gambar_name, $gambar_tmp, $path_folder="produk") {
 		/*global $_FILES["gambar"];
 		global $_FILES["gambar"]['name'];
 		global $_FILES["gambar"]['tmp_name'];*/
 
 		$valid_extensions = array('jpeg', 'jpg', 'png', 'gif', 'bmp'); // valid extensions
-		$path = "../".$path_folder; // upload directory
+		$path = "../public/assets/images/".$path_folder.DS; // upload directory
 
 		if(isset($gambar))
 		{
@@ -55,18 +69,22 @@ class AdminMainController extends Controller
 				$filename 	= strtolower($final_image);
 				$pathfinal 	= $path.$filename;
 
-				if (file_exists($path)) {
+				if (file_exists($path) && file_exists($path."thumbs")) {
 					move_uploaded_file($tmp, $pathfinal);
 				} else {
 					mkdir($path);
+					mkdir($path."thumbs");
+
 					chmod($path, 0777);
+					chmod($path."thumbs", 0777);
+
 					move_uploaded_file($tmp,$pathfinal);
 				}
 
 				// variables
-				$srcFile 	= "../".$path_folder.$filename;
-				$thumbFile 	= "../".$path_folder.'/thumbs/'.$filename;
-				$thumbSize	= 100;
+				$srcFile 	= $path.$filename;
+				$thumbFile 	= $path.'/thumbs/'.$filename;
+				$thumbSize	= 200;
 
 				/* Determine the File Type */
 				$type = substr( $filename , strrpos( $filename , '.' )+1 );
@@ -122,16 +140,20 @@ class AdminMainController extends Controller
 		}
 	}
 
-	public function deleteImage($model, $id = array(), $path) {
+	public function deleteImage($model, $id = array(), $path="produk", $kolom="gambar") {
 		//hapus foto yg lama
-		$this->model($model);
+		// $this->model($model);
 		$query 	= $this->$model->selectWhere($id);
-		$li 	= $this->$model->getRows($query);
+		$li 	= $this->$model->getResult($query);
 
-		$data = array(
-			'gambar' => $li
-		);
+		$gambarnya = $li[0][$kolom];
 
-		unlink("../". $path .DS. $data["gambar"]);
+		if ($gambarnya) {
+			unlink("../public/assets/images". DS . $path .DS. $gambarnya);
+			unlink("../public/assets/images". DS . $path .DS. "thumbs" .DS. $gambarnya);
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

@@ -34,6 +34,10 @@ class AdminController extends Controller
 		$this->getController('kategori', $action, $parameter);
 	}
 
+	public function katberita($action='', $parameter='') {
+		$this->getController('katberita', $action, $parameter);
+	}
+
 	public function produk($action='', $parameter='') {
 		$this->getController('produk', $action, $parameter);
 	}
@@ -46,8 +50,8 @@ class AdminController extends Controller
 		$this->getController('slider', $action, $parameter);
 	}
 
-	public function transaksi($action='', $parameter='') {
-		$this->getController('transaksi', $action, $parameter);
+	public function medsos($action='', $parameter='') {
+		$this->getController('medsos', $action, $parameter);
 	}
 
 	public function menu($action='', $parameter='') {

@@ -50,6 +50,7 @@ class KategoriController extends AdminMainController
 	public function insert() {
 		$data 	= array();
 		$data["nama_kategori"] 	= $_POST["kategori"];
+		$data["deskripsi"] 		= $_POST["deskripsi"];
 		$data["slug"] 			= $_POST["slug"];
 
 		$simpan	= $this->kategori->insert($data);
@@ -58,6 +59,7 @@ class KategoriController extends AdminMainController
 	public function update() {
 		$data 	= array();
 		$data["nama_kategori"] 	= $_POST["kategori"];
+		$data["deskripsi"] 		= $_POST["deskripsi"];
 		$data["slug"] 			= $_POST["slug"];
 
 		$id 	= $_POST["id"];

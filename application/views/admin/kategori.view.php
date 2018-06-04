@@ -12,6 +12,7 @@ end_content();
 start_modal("modal_form", "return saveData()");
 	form_input("Nama Kategori", "kategori", "text", 5, "", "required");
 	form_input("Slug", "slug", "text", 5, "", "required");
+	form_textarea("Deskripsi", "deskripsi");
 end_modal();
 ?>
 </div>
@@ -34,6 +35,7 @@ end_modal();
 	// menampilkan form modal tambah data
 	function addForm() {
 		save_method = "add";
+		CKEDITOR.instances['deskripsi'].setData('');
 		$('#modal_form').modal('show');
 		$('#modal_form form')[0].reset();
 		$('.modal-title').text('Tambah Kategori');
@@ -55,6 +57,10 @@ end_modal();
 				$('#id').val(data.id_kategori);
 				$('#kategori').val(data.nama_kategori);
 				$('#slug').val(data.slug);
+
+				// decode htmlentities string
+				var deskripsi = he.decode(data.deskripsi);
+				CKEDITOR.instances['deskripsi'].setData(deskripsi);
 			},
 
 			error: function() {
@@ -68,6 +74,11 @@ end_modal();
 		if (save_method == "add") url = "<?= BASE_URL; ?>admin/kategori/insert";
 		else url = "<?= BASE_URL; ?>admin/kategori/update";
 
+		// force update CKEDITOR
+		for (instance in CKEDITOR.instances) {
+			CKEDITOR.instances[instance].updateElement();
+		}
+
 		$.ajax({
 			url: url,
 			type: "POST",
@@ -75,6 +86,7 @@ end_modal();
 			success: function(data) {
 				$('#modal_form').modal('hide');
 				$('#modal_form form')[0].reset();
+				CKEDITOR.instances['deskripsi'].setData('');
 				table.ajax.reload();
 				swal("Selamat!", "Data berhasil disimpan!", "success");
 			},

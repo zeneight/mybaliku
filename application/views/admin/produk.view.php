@@ -50,6 +50,7 @@ end_modal();
 		CKEDITOR.instances['deskripsi'].setData('');
 		$('#modal_form').modal('show');
 		$('#modal_form form')[0].reset();
+		$('#img-gambar').html('');
 		$('.modal-title').text('Tambah Produk');
 	}
 

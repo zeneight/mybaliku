@@ -79,10 +79,7 @@ if ($_SESSION["username"]=="operator") {
 				<li class="dropdown <?php echo $profil; ?>">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Pengaturan<span class="caret"></span></a>
 					<ul class="dropdown-menu" aria-labelledby="download">
-						<li <?php echo $pengaturan; ?>><a tabindex="-1" href="index.php?module=settings">Tampilan</a></li>
-						<li><a tabindex="-1" href="index.php?module=menu&page=list">Menu Manajer</a></li>
-						<!-- <li><a tabindex="-1" href="index.php?module=shortcut_intro&page=list">Ikon Halaman Intro</a></li>
-						<li><a tabindex="-1" href="index.php?module=shortcut_intro_list&page=list">List Ikon Intro</a></li> -->
+						<li><a tabindex="-1" href="<?php echo BASE_URL; ?>admin/menu">Manajemen Menu</a></li>
 					</ul>
 				</li>
 
@@ -95,10 +92,10 @@ if ($_SESSION["username"]=="operator") {
 				</li>
 
 				<li class="dropdown <?php echo $mberita; ?>">
-					<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Berita <span class="caret"></span></a>
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Blog <span class="caret"></span></a>
 					<ul class="dropdown-menu" aria-labelledby="download">
 						<li><a href="<?php echo BASE_URL; ?>admin/katberita">Kategori</a></li>
-						<li><a href="<?php echo BASE_URL; ?>admin/berita">Berita</a></li>
+						<li><a href="<?php echo BASE_URL; ?>admin/berita">Blog</a></li>
 					</ul>
 				</li>
 
@@ -108,11 +105,9 @@ if ($_SESSION["username"]=="operator") {
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Ekstra<span class="caret"></span></a>
 					<ul class="dropdown-menu" aria-labelledby="download">
 						<li <?php echo $slider; ?>><a tabindex="-1" href="<?php echo BASE_URL; ?>admin/slider">Slider</a></li>
-						<li <?php echo $slider; ?>><a tabindex="-1" href="index.php?module=slider_kecil&page=list">Banner Samping</a></li>
-						<li <?php echo $slider; ?>><a tabindex="-1" href="index.php?module=kritiksaran&page=list">Kritik & Saran</a></li>		
-						<li <?php echo $media_sosial; ?>><a tabindex="-1" href="index.php?module=social_media&page=list">Media Sosial</a></li>
-						<li <?php echo $kontak_email; ?>><a tabindex="-1" href="index.php?module=email_contact&page=list">Kontak Email</a></li>
-						<li><a tabindex="-1" href="index.php?module=situsterkait&page=list">Situs Terkait</a></li>
+						<li <?php echo $slider; ?>><a tabindex="-1" href="<?php echo BASE_URL; ?>admin/pesan">Pesan</a></li>
+						<li <?php echo $media_sosial; ?>><a tabindex="-1" href="<?php echo BASE_URL; ?>admin/medsos">Media Sosial</a></li>
+						<li <?php echo $kontak_email; ?>><a tabindex="-1" href="<?php echo BASE_URL; ?>admin/kontak">Kontak Email</a></li>
 						<!-- <li <?php echo $popup; ?>><a tabindex="-1" href="index.php?module=popup&page=list">Popup</a></li> -->
 					</ul>
 				</li>
@@ -123,8 +118,10 @@ if ($_SESSION["username"]=="operator") {
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="directory">Akun <span class="caret"></span></a>
 					<ul class="dropdown-menu" aria-labelledby="directory">
+						<li><a tabindex="-1" href="<?php echo BASE_URL; ?>admin/profil"><i class="fa fa-user"></i> Profil</a></li>
+						<li><a tabindex="-1" href="<?php echo BASE_URL; ?>admin/pengaturan"><i class="fa fa-wrench"></i> Pengaturan</a></li>
 						<li class="divider"></li>
-						<li><a tabindex="-1" href="<?php echo BASE_URL; ?>admin/logout">Logout</a></li>
+						<li><a tabindex="-1" href="<?php echo BASE_URL; ?>admin/logout"><i class="fa fa-shutdown"></i> Logout</a></li>
 					</ul>
 				</li>
 			</ul>
